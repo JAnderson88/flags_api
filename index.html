@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body{
+      margin: 0;
+      padding: 0;
+    }
+  header{
+    margin: 5vh 0vw;
+    text-align: center;
+    font-size: 36px;
+  }
+  h3{
+    margin: 3vh 4vw;
+    text-align: center;
+    font-size: 26px;
+  }
+  .container{
+    display: flex;
+    margin: 4vh 9vw;
+    justify-content: center;
+    align-items: center;
+  }
+  .container > div{
+    display: flex;
+    flex-direction: column;
+    min-height: 10vh;
+    max-height: 10vh;
+    margin: 0vh 3vw;
+  }
+  .container .country{
+    flex: 1;
+  }
+  .container .url{
+    flex: 2.5;
+  }
+  .url input{
+    min-width: 40vw;
+    max-width: 40vw;
+  }
+  .container .button_cont{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  </style>
+</head>
+<body>
+  <header>
+    Update the TechLaunch Flag Api
+  </header>
+  <h3>
+    If you don't see a flag icon, it's ok, all you need to do is provide the country code for the the country's currency and then provide an URL to the preferred icon image. 
+  </h3>
+  <div class="container">
+    <div class="country">
+      <label for="">Country Code</label>
+      <input type="text">
+    </div>
+    <div class="url">
+      <label for="">URL</label>
+      <input type="text">
+    </div>
+    <div class="button_cont">
+      <button>Update API</button>
+    </div>
+  </div>
+  <script>
+    const country = document.querySelector(".country input");
+    const url = document.querySelector(".url input");
+    const button = document.querySelector(".button_cont button");
+    button.addEventListener("click", e => {
+      if((country.value !== "" && url.value !== "")){
+        fetch("/flags/set-flags", {
+          method: "POST",
+          body: JSON.stringify({
+            code: country.value,
+            url: url.value
+          }),
+          headers: { 'content-type': 'application/json' }
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+        })
+      }
+    })
+  </script>
+</body>
+</html>
